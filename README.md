@@ -55,7 +55,7 @@
 ```bash
 git clone https://github.com/lingdiaoluo/space-island.git
 cd space-island
-dotnet publish SpaceIsland/SpaceIsland.csproj -c Release -r win-x64 \
+dotnet publish SpaceIsland.csproj -c Release -r win-x64 \
   --self-contained true -p:PublishSingleFile=true
 ```
 
