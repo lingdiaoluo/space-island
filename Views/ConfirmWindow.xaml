@@ -1,0 +1,72 @@
+<Window x:Class="SpaceIsland.Views.ConfirmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:conv="clr-namespace:SpaceIsland.Converters"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="确认清理" Width="520" SizeToContent="Height"
+        FontFamily="Microsoft YaHei UI, Segoe UI"
+        WindowStyle="None" Background="{DynamicResource Brush.Page}"
+        WindowStartupLocation="CenterOwner" UseLayoutRounding="True"
+        ResizeMode="NoResize" ShowInTaskbar="False">
+
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="0" ResizeBorderThickness="0" GlassFrameThickness="0"
+                            CornerRadius="0" UseAeroCaptionButtons="False" />
+    </shell:WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <conv:RiskToBrushConverter x:Key="RiskToBrush" />
+    </Window.Resources>
+
+    <Border Background="{DynamicResource Brush.Card}" BorderBrush="{DynamicResource Brush.Hairline}"
+            BorderThickness="1" CornerRadius="14" Margin="10">
+        <StackPanel Margin="24,22,24,20">
+
+            <TextBlock Text="确认清理这些内容" Style="{StaticResource H1}" />
+            <TextBlock x:Name="SummaryText" Text="" Style="{StaticResource Muted}" Margin="0,6,0,0" />
+
+            <Border Background="{DynamicResource Brush.Subtle}" CornerRadius="10" Margin="0,16,0,0"
+                    Padding="6,8" MaxHeight="260">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="ItemList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="10,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Ellipse Grid.Column="0" Width="7" Height="7" VerticalAlignment="Center"
+                                             Margin="0,0,9,0"
+                                             Fill="{Binding Risk, Converter={StaticResource RiskToBrush}}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Title}" FontSize="12.5"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource Brush.Text}" />
+                                    <TextBlock Grid.Column="2" Text="{Binding SizeText}" FontSize="12.5"
+                                               FontWeight="SemiBold" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource Brush.Text}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+
+            <TextBlock x:Name="NoteText" Style="{StaticResource Muted}" Margin="0,14,0,0" />
+
+            <Grid Margin="0,20,0,0">
+                <Button Content="取消" Style="{StaticResource GhostButton}" HorizontalAlignment="Left"
+                        Padding="24,9" Click="OnCancel" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <CheckBox x:Name="RememberBox" Content="以后不再询问可直接清理这些项"
+                              FontSize="11.5" VerticalAlignment="Center" Margin="0,0,14,0"
+                              Foreground="{DynamicResource Brush.TextSoft}"
+                              Visibility="Collapsed" />
+                    <Button x:Name="ConfirmButton" Content="允许清理" Style="{StaticResource AccentButton}"
+                            Click="OnConfirm" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Border>
+</Window>
